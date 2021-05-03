@@ -9,7 +9,7 @@ print(2*8)
 print(3*(3+1))
 
 # 2-2. 문자열 자료형
-print('풍선')
+print('풍선') 
 print("나비") 
 print("ㅋㅋㅋㅋㅋㅋㅋ")
 print("ㅋ"*8)
