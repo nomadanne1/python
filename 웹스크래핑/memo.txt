@@ -1,0 +1,59 @@
+웹크롤링? 웹스크래핑!
+
+* 웹
+html 뼈대 
+css 예쁘게
+javascript 살아있게
+
+HTML (Hyper Text Markup Language)
+
+1. html
+2. XPath
+[SELECTOR] XPATH와 CSS Selector 차이 
+CSS seletor는 원하는 범위의 값을 가진 태그'를 선택하는 선택자가 없다. 
+예를 들어, 'value가 50이상인 input태그를 선택'한다고 했을 때 방법이 없다. 
+그냥 a태그 전체를 탐색해서 50이상인 태그만 스타일을 적용해주는 스크립트를 작성해야만 했다. 
+또, 선택한 태그들의 값을 바로 뽑아서 사용하고 싶어도 map으로 한번 가공해줘야했다.
+
+CSS Selector가 하지못했던 일을 XPATH는 할 수 있다. 
+"//input[value>=50]". 매우 간단한 방법으로 처리한다. 또한, 
+선택된 태그의 값만 가지고 오려면 "//input[value>=50]/@value" 이렇게 사용하면 된다.
+이 외에도 4번째에 있는 자식 태그를 탐색하기위해 "div:nth-child(4)"와 같이 복잡한 문법이 아니라, 
+"//div/*[4]" 간결한 문법을 제공한다.
+
+출처- https://heodolf.tistory.com/7
+
+3. 크롬
+4. Requets 라이브러리 install
+터미널 > pip install requests 
+
+import requests
+
+5. 정규식 기본 (Regular expression)
+
+import re
+
+1. p = re.compile ("원하는 형태")
+2. m = p.match("비교할 문자열") : 주어진 문자열의 처음부터 일치하는지 확인
+3. m = p.search("비교할 문자열) : 주어진 문자열 중에 일치하는게 있는지 확인
+4. lst = p.findall("비교할 문자열) : 일치하는 모든 것을 "리스트" 형태로 반환
+
+ "원하는 형태" : 정규식
+ . (ca.e) : 하나의 문자를 의미 > care, cafe, case (o) | caffe (x)
+ ^ (^de) : 문자열의 시작 > dest, destination (o) | fade (x)
+ $ (se$) : 문자열의 끝 > case, base (o) | face (x)
+
+[참고]
+https://www.w3schools.com/python/python_regex.asp
+https://docs.python.org/3/library/re.html 
+
+6. User Agent
+접속하는 브라우저에 따라 User Agent가 다르다.
+
+7. 
+
+8. 
+
+9. 
+
+10. 
