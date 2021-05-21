@@ -47,10 +47,49 @@ import re
 https://www.w3schools.com/python/python_regex.asp
 https://docs.python.org/3/library/re.html 
 
-6. User Agent
+6. User Agent (사용자를 대신하여 일을 수행하는 소프트웨어 에이전트)
 접속하는 브라우저에 따라 User Agent가 다르다.
 
-7. 
+7. BeaurifulSoup4
+터미널 >
+1. pip install beautifulsoup4, 
+2. pip install lxml (parser 구문분석)
+
+[참고] (한글번역본)
+https://www.crummy.com/software/BeautifulSoup/bs4/doc.ko/
+
+* Parsing (파싱) 이란? Parser (파서) 란?
+
+- Parsing (파싱)
+  언어학에서 parsing은 구문 분석이라고도하며 문장을 그것을 이루고 있는 구성 성분으로 분해하고 
+  그들 사이의 위계 관계를 분석하여 문장의 구조를 결정하는 것
+
+- Parser (파서)
+  parsing을 하는 processor 즉 parser가 parsing을 하는 것 (parsing을 수행하는 프로그램)
+  parser란 compiler의 일부로 컴파일러나 인터프리터에서 원시 프로그램을 읽어 들여 
+  그 문장의 구조를 알아내는 parsing(구문 분석)을 행하는 프로그램
+
+출처 - https://na27.tistory.com/230
+
+* 파이썬 인터프리터(python interpreter)란?
+- 컴파일 언어 : 소스 코드를 기계어로 컴파일해서 실행파일을 만들고 실행.
+- 인터프러터 언어 : 코드를 한 줄씩 읽어 내려가며 실행하는 프로그래밍 언어. 
+
+- [ 장점 ]
+  배우기 쉬워서 학습용으로 좋다.  
+  공동 작업과 유지 보수가 아주 쉽고 편해서 생산성이 높고 실사용률도 높다.
+  읽고 쓰기 쉽다.
+
+- [ 단점 ]
+  느리다.
+
+cf. 자바 .Java ----> 컴파일 ----> class ---> 인터프린터 ----> 실행 (하이브리드?)
+
+출처 - https://gusdnr69.tistory.com/55
+
+* HTTP METHOD
+- GET
+- POST : HTTP 메시지 body에 숨겨서 보냄. 보안, 길이제한x
 
 8. 
 
