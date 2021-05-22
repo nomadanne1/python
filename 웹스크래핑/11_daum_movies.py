@@ -10,7 +10,7 @@ for year in range(2015, 2020): # 2015 ~ 2019
 
     images = soup.find_all("img", attrs={"class":"thumb_img"})
 
-    for idx, image in enumerate(images):
+    for idx, image in enumerate(images): #★
         # print(image["src"])
         image_url = image["src"]
         if image_url.startswith("//"):
