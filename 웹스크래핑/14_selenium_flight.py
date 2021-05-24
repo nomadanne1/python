@@ -30,7 +30,6 @@ browser.find_element_by_xpath("//*[@id='recommendationList']/ul/li[1]/div/span")
 # 항공권 검색 클릭
 browser.find_element_by_link_text("항공권 검색").click()
 
-
 # 첫 번째 결과 출력 *loding시간으로 인해 오류 발생.
 # elem = browser.find_element_by_xpath("//*[@id='content']/div[2]/div/div[4]/ul/li[1]")
 # print(elem.text)

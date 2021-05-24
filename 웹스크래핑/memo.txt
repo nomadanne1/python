@@ -116,9 +116,37 @@ cf. 자바 .Java ----> 컴파일 ----> class ---> 인터프린터 ----> 실행 (
 
 9. Selenium
 터미널 > pip install selenium
-크롬 드라이브 다운로드 (PYTHONWORKSPACE)
+크롬 드라이브 다운로드 (PYTHONWORKSPACE) ★ 크롬 버전이랑 일치해야함!!
 
 from selenium import webdriver
 
+*셀레니움 활용
+- 네이버 로그인
+- 네이버 항공권 (loding오류 해결)
+- 구글무비 * 동적페이지 웹스크래핑 (사용자가 어떤 동작을 했을때 동작)
+
+☆ loding시간으로 인한 오류 해결 
+  ex) no such element...
+
+1. import time 
+   time.sleep(3)
+
+>> 3초 기다렸다가 실행
+>> 비효율
+
+2. from selenium.webdriver.common.by import By
+   from selenium.webdriver.support.ui import WebDriverWait
+   from selenium.webdriver.support import expected_conditions as EC
+
+   try:
+      elem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='content']/div[2]/div/div[4]/ul/li[1]"))) # ※괄호2개 
+      # 성공했을 때 동작 수행
+   finally:
+      browser.quit()
+      # 실패했을경우 브라우저 닫음
+
+>> WebDriverWait를 통해서 브라우저 (최대)10초동안 기다린다.
+>> EC.presence_of_element_located ~> By.XPATH라는 조건으로 해당하는 엘리먼트가 위치할때까지.
+>> (로딩이 얼마나 걸릴지 모르기 때문에 좀더 효율적)
 
 10. 
