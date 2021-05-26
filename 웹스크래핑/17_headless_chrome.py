@@ -1,20 +1,16 @@
-# 2-2
 from selenium import webdriver
 
-browser = webdriver.Chrome()
+# ★ Headless 크롬
+options = webdriver.ChromeOptions()
+options.headless = True
+options.add_argument("window-size=1920x1080")
+
+browser = webdriver.Chrome(options=options)
 browser.maximize_window
 
 # 페이지 이동
 url = "https://play.google.com/store/movies/top"
 browser.get(url)
-
-# 지정한 위치로 스크롤 내리기
-# 모니터(해상도) 높이인 1080 위치로 스크롤 내리기
-# browser.execute_script("window.scrollTo(0, 1080)") # 1920 x 1080
-# browser.execute_script("window.scrollTo(0, 2080)")
-
-# 화면 가장 아래로 스크롤 내리기
-# browser.execute_script("window.scrollTo(0, document.body.scrollHeight)") # document.body.scrollHeight : 현재 문서의 총 높이
 
 import time
 interval = 2 # 2초에 한번씩 스크롤 내림
@@ -38,16 +34,13 @@ while True:
     prev_height = curr_height
 
 print("스크롤 완료")
+browser.get_screenshot_as_file("google_movie.png") # *스크린샷
 
-# > browser.page_source : 셀레니움을 통해서 페이지소스 가져옴 
-
-# 2-3
 import requests
 from bs4 import BeautifulSoup
 
 soup = BeautifulSoup(browser.page_source, "lxml")
 
-# movies = soup.find_all("div", attrs={"class":["ImZGtf mpg5gc", "Vpfmgd"]}) # [] 리스트 안에 모든걸 만족하는 class
 movies = soup.find_all("div", attrs={"class":"Vpfmgd"}) # [] 리스트 안에 모든걸 만족하는 class
 print(len(movies)) 
 
@@ -59,7 +52,6 @@ for movie in movies:
     if original_price:
         original_price = original_price.get_text()
     else:
-        # print(title, "  <할인되지 않은 영화 제외>")
         continue
 
     # 할인 된 가격
@@ -67,7 +59,6 @@ for movie in movies:
 
     # 링크
     link = movie.find("a", attrs={"class":"JC71ub"})["href"]
-    # 올바른 링크 : https://play.google.com + link
 
     print(f"제목 : {title}")
     print(f"할인 전 금액 : {original_price}")

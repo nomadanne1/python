@@ -149,4 +149,26 @@ from selenium import webdriver
 >> EC.presence_of_element_located ~> By.XPATH라는 조건으로 해당하는 엘리먼트가 위치할때까지.
 >> (로딩이 얼마나 걸릴지 모르기 때문에 좀더 효율적)
 
-10. 
+10. Headless 크롬
+*셀레니움 - 매번 브라우저를 띄움 번거롭고, 느리다 >>Headless 크롬
+(크롬을 띄우지 않고 크롬을 쓸 수 있음)
+
+from selenium import webdriver
+
+★ headless 크롬 설정
+options = webdriver.ChromeOptions()
+options.headless = True
+options.add_argument("window-size=1920x1080")
+
+browser = webdriver.Chrome(options=options)
+browser.maximize_window
+
+>> ☆ 스크린샷을 통해서 원하는 동작을 했는지 확인가능
+browser.get_screenshot_as_file("google_movie.png") 
+
+>> headless 크롬 사용시 문제점
+headless 크롬일 경우 따로 user-agent 설정 안해주면 
+HeadlessChrome 정보가 user-agent에 들어가기  때문에 브라우저 접속 막힐 수 있음
+
+*문제해결 : user-agent 설정
+options.add_argument("user-agent=나의 user-agent 복붙")
