@@ -29,6 +29,10 @@ CSS Selector가 하지못했던 일을 XPATH는 할 수 있다.
 
 import requests
 
+>> Requests : 주어진 url을 통해 받아온 html에 원하는 정보가 있을때 사용
+
+res.raise_for_statue() # 접속에 문제가 없는지 확인 
+
 5. 정규식 기본 (Regular expression)
 
 import re
@@ -54,6 +58,15 @@ https://docs.python.org/3/library/re.html
 터미널 >
 1. pip install beautifulsoup4, 
 2. pip install lxml (parser 구문분석)
+
+[사용법]
+find                        조건에 맞는 첫 번째 element
+find_all                    조건에 맞는 모든 element 리스트로
+find_next_sibling(s)        다음 형제 찾기
+find_previous_sibling(s)    이전 형제 찾기
+
+soup["href"]                속성
+soup.get_text()             텍스트
 
 [참고] (한글번역본)
 https://www.crummy.com/software/BeautifulSoup/bs4/doc.ko/
@@ -134,7 +147,9 @@ from selenium import webdriver
 >> 3초 기다렸다가 실행
 >> 비효율
 
-2. from selenium.webdriver.common.by import By
+2. 예) xpath기준으로 "//*[@id='content']" 이 값이 페이지에 나올 때 까지 기다린후 동작 수행
+
+   from selenium.webdriver.common.by import By
    from selenium.webdriver.support.ui import WebDriverWait
    from selenium.webdriver.support import expected_conditions as EC
 
@@ -149,9 +164,41 @@ from selenium import webdriver
 >> EC.presence_of_element_located ~> By.XPATH라는 조건으로 해당하는 엘리먼트가 위치할때까지.
 >> (로딩이 얼마나 걸릴지 모르기 때문에 좀더 효율적)
 
+☆ Requests vs Selenium 방법만 다를뿐!! 
+=> BeadutifulSoup을 이용해서 원하는 데이터 추출(웹 스크래핑) 
+
+Requests : 웹페이지 (html) 읽어오기
+>> 주어진 url을 통해 받아온 html에 원하는 정보가 있을때 
+
+1. 빠르다
+2. 동적 웹 페이지 x
+
+
+Selenium : 웹 페이지 자동화
+1. 느리다
+2. 동적 웹 페이지 o
+
+>> 로그인, 어떤 결과에 대한 필터링등 사용자가 어떤 동작을 해야하는 경우 
+>> ★ 크롬 버전에 맞는 chromedriver.exe가 반드시 있어야 한다.
+
+[사용법]
+find_element(s)_by_id             id로 찾기
+find_element(s)_by_class_name     class name 으로 찾기
+find_element(s)_by_link_text      링크 text로 찾기
+find_element(s)_by_xpath          xpath로 찾기
+
+click()                           클릭
+send_keys()                       글자 입력 (clear())
+
+☆ 셀레니움 공부하기 좋은 사이트
+https://selenium-python.readthedocs.io/
+
 10. Headless 크롬
 *셀레니움 - 매번 브라우저를 띄움 번거롭고, 느리다 >>Headless 크롬
-(크롬을 띄우지 않고 크롬을 쓸 수 있음)
+
+- 브라우저를 띄우지 않고 동작
+- 때로는 User-Agent 정의 필요
+- 크롬 59 버전부터 (최신 버전이면 모두 가능)
 
 from selenium import webdriver
 
@@ -168,7 +215,7 @@ browser.get_screenshot_as_file("google_movie.png")
 
 >> headless 크롬 사용시 문제점
 headless 크롬일 경우 따로 user-agent 설정 안해주면 
-HeadlessChrome 정보가 user-agent에 들어가기  때문에 브라우저 접속 막힐 수 있음
+HeadlessChrome 정보가 user-agent에 들어가기 때문에 브라우저 접속 막힐 수 있음
 
 *문제해결 : user-agent 설정
 options.add_argument("user-agent=나의 user-agent 복붙")
