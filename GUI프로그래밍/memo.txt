@@ -1,0 +1,25 @@
+GUI 프로그래밍 (Graphical User Interface)
+ : 눈으로 볼 수 있는 프로그래밍
+
+* GUI 프로그래밍을 배우고 '여러 이미지 합치기'프로그램 만들기
+
+1. tkinter >> 파이썬 설치할때 자동으로 모듈이 포함됨
+kinter, t-kinter, tk-Inter
+
+tkinter는 GUI에 대한 표준 Python 인터페이스이며 Window 창을 생성할 수 있다.
+
+# 사용
+from tkinter import *
+
+root = Tk()
+root.mainloop()
+>> 윈도우이름.mainloop()를 사용하여 윈도우이름의 윈도우 창을 
+>> 윈도우가 종료될 때 까지 실행시킵니다.
+
+2. 기본 프레임
+3. 버튼 Button()
+*위젯 (버튼, 체크박스, 텍스트박스)
+
+4. 레이블 Lable()
+- 글자, 이미지를 보여주는 것 (실제 어떤 동작을 넣을 수 있는것은 아니다.)
+
