@@ -3,6 +3,8 @@ GUI 프로그래밍 (Graphical User Interface)
 
 * GUI 프로그래밍을 배우고 '여러 이미지 합치기'프로그램 만들기
 
+☆ .pack()
+
 1. tkinter >> 파이썬 설치할때 자동으로 모듈이 포함됨
 kinter, t-kinter, tk-Inter
 
@@ -28,3 +30,19 @@ root.mainloop()
 - Entry: 엔터입력x >> 한줄로 입력받을 때 >> 로그인, 닉네임 등등
 
 6. 리스트박스 Listbox()
+
+7. 체크박스 Checkbutton()
+chkvar = IntVar() # chkvar 에 int 형으로 값을 저장한다.
+
+8. 라디오박스
+
+9. 콤보박스  ttk.Combobox()
+import tkinter.ttk as ttk
+
+*state="readonly"
+
+10. 프로그래스바 ttk.Progressbar()
+import tkinter.ttk as ttk
+
+mode="indeterminate" / "determinate"
+
