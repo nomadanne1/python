@@ -46,3 +46,17 @@ import tkinter.ttk as ttk
 
 mode="indeterminate" / "determinate"
 
+11. 메뉴
+12. 메시지박스 
+import tkinter.messagebox as msgbox
+
+# 상황에 따라 아이콘, 소리 다름.
+msgbox.showinfo() : 알림
+msgbox.showwarning() : 경고
+msgbox.showerror() : 에러
+
+msgbox.askokcancel() : 확인 / 취소
+msgbox.askretrycancel() : 다시시도(R) / 취소
+msgbox.askyesno() : 예(Y) / 아니오(N)
+msgbox.askyesnocancel() : 예(Y) / 아니오(N) / 취소
+
