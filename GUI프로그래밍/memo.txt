@@ -60,3 +60,36 @@ msgbox.askretrycancel() : 다시시도(R) / 취소
 msgbox.askyesno() : 예(Y) / 아니오(N)
 msgbox.askyesnocancel() : 예(Y) / 아니오(N) / 취소
 
+13. 프레임
+Frame() : 프레임
+LabelFrame() : 제목이 있는 프레임
+
+.pack() 옵션
+side="left | right | top | bottom"
+fill="both"
+expand=True
+
+14. 스크롤 바 Scrollbar()
+
+예)
+scrollbar = Scrollbar(frame)
+scrollbar.pack(side="right", fill="y")...
+
+★ 매핑을 해줘야 제대로 동작한다.
+listbox = Listbox(frame, ... , yscrollcommand=scrollbar.set)
+scrollbar.config(command=listbox.yview)
+
+15. 그리드 기본 .grid(row=0, column=0)
+*그리드 : 격자
+
+btn1.grid(row=0, column=0)
+btn2.grid(row=1, column=1) 
+...
+
+┌─────┬─────┬─────┬─────┐
+│ 0,0 │ 0,1 │ 0,2 │ 0,3 │
+├─────┼─────┼─────┼─────┤
+│ 1,0 │ 1,1 │ 1,2 │ 1,3 │
+├─────┼─────┼─────┼─────┤
+│ 2,0 │ 2,1 │ 2,2 │ 2,3 │
+└─────┴─────┴─────┴─────┘
