@@ -79,11 +79,14 @@ scrollbar.pack(side="right", fill="y")...
 listbox = Listbox(frame, ... , yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 
-15. 그리드 기본 .grid(row=0, column=0)
+15-1. 그리드 기본 .grid(row=0, column=0)
 *그리드 : 격자
 
-btn1.grid(row=0, column=0)
-btn2.grid(row=1, column=1) 
+btn1.grid(row=0, column=0, rowspan=2)
+btn2.grid(row=1, column=1, columnspan=2)
+
+rowspan : 현재 위치로부터 아래쪽으로 몇 줄을 더함
+columnspan : 현재 위치로부터 오른쪾으로 몇 칸 더함
 ...
 
 ┌─────┬─────┬─────┬─────┐
@@ -93,3 +96,13 @@ btn2.grid(row=1, column=1)
 ├─────┼─────┼─────┼─────┤
 │ 2,0 │ 2,1 │ 2,2 │ 2,3 │
 └─────┴─────┴─────┴─────┘
+
+15-2. 그리드 심화
+btn1.grid(row=0, column=0, sticky=N+E+W+S) 
+>> sticky=(동서남북) : 지정한 방향으로 버튼위젯을 붙여라
+
+btn_4 = Button(root, text="4", padx=10, pady=10)
+>> padx, pady : 버튼 'text 기준' 상하, 좌우 크기
+
+btn_4.grid(row=3, column=0, sticky=N+E+W+S, padx=3, pady=3)
+>> padx, pady : 버튼 사이의 상하, 좌우 간격 
