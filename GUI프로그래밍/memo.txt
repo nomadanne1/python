@@ -82,8 +82,8 @@ scrollbar.config(command=listbox.yview)
 15-1. 그리드 기본 .grid(row=0, column=0)
 *그리드 : 격자
 
-btn1.grid(row=0, column=0, rowspan=2)
-btn2.grid(row=1, column=1, columnspan=2)
+btn1.grid(row=0, column=0)
+btn2.grid(row=1, column=1)
 
 rowspan : 현재 위치로부터 아래쪽으로 몇 줄을 더함
 columnspan : 현재 위치로부터 오른쪾으로 몇 칸 더함
