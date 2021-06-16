@@ -1,19 +1,39 @@
 import tkinter.ttk as ttk
-from tkinter import *
+from tkinter import * # __all__
+from tkinter import filedialog 
 
 root = Tk()
 root.title("Nado HUI")
 
-# 서로다른 크기/위치 혼합 >> grid가 아닌 pack을 이용해서 layout 구성
+## 파일 추가 & 선택 삭제
+'''
+filedialog tkinter에서 제공
+filedialog는 서브모듈이기 때문에 별도로 명시적으로 import 해줘야 한다.
+
+from tkinter import filedialog 
+'''
+
+# 파일 추가
+def add_file():
+    files = filedialog.askopenfilenames(title="이미지 파일을 선택하세요", \
+        filetypes=(("PNG 파일", "*.png"), ("모든 파일", "*.*")), \
+        initialdir="C:/") # 최초에 C:/ 셩로를 보여줌   
+
+    # 사용자가 선택한 파일 목록
+    # for file in files:  
+
+# # 선택 삭제 
+# def del_file():
+#     pass
 
 # 파일 프레임 (파일 추가, 선택 삭제)
 file_frame = Frame(root)
-file_frame.pack(fill="x", padx=5, pady=5) # padx=5, pady=5 >> 간격 띄우기
+file_frame.pack(fill="x", padx=5, pady=5) 
 
-btn_add_file = Button(file_frame, padx=5, pady=5, width=12, text="파일추가")
+btn_add_file = Button(file_frame, padx=5, pady=5, width=12, text="파일추가", command=add_file) 
 btn_add_file.pack(side="left")
 
-btn_del_file = Button(file_frame, padx=5, pady=5, width=12, text="선택삭제")
+btn_del_file = Button(file_frame, padx=5, pady=5, width=12, text="선택삭제", command=del_file)
 btn_del_file.pack(side="right")
 
 # 리스트 프레임
@@ -29,10 +49,10 @@ scrollbar.config(command=list_file.yview)
 
 # 저장 경로 프레임
 path_frame = LabelFrame(root, text="저장경로")
-path_frame.pack(fill="x", padx=5, pady=5, ipady=5) # ipady=5 >> 프레임 높이
+path_frame.pack(fill="x", padx=5, pady=5, ipady=5) 
 
 txt_dest_path = Entry(path_frame)
-txt_dest_path.pack(side="left", fill="x", expand=True, padx=5, pady=5, ipady=4) # 높이 변경
+txt_dest_path.pack(side="left", fill="x", expand=True, padx=5, pady=5, ipady=4)
 
 btn_dest_path = Button(path_frame, text="찾아보기", width=10)
 btn_dest_path.pack(side="right", padx=5, pady=5)
@@ -91,12 +111,6 @@ btn_close.pack(side="right", padx=5, pady=5)
 
 btn_start = Button(frame_run, text="시작", padx=5, pady=5, width=12)
 btn_start.pack(side="right", padx=5, pady=5)
-
-'''
-btn_start.pack(side="right") / btn_close.pack(side="right") 
-순으로 .pack()하면 시작버튼을 오른쪽에 놓고, 닫기버튼을 오른쪽에 쌓으니깐 
-버튼순서 >> 닫기 | 시작 순.
-'''
 
 root.resizable(False, False) # 윈도우 크기 고정
 root.mainloop()
