@@ -1,4 +1,5 @@
 import tkinter.ttk as ttk
+import tkinter.messagebox as msgbox
 from tkinter import * # __all__
 from tkinter import filedialog 
 
@@ -10,21 +11,70 @@ root.title("Nado HUI")
 filedialog tkinter에서 제공
 filedialog는 서브모듈이기 때문에 별도로 명시적으로 import 해줘야 한다.
 
-from tkinter import filedialog 
+>> from tkinter import filedialog 
 '''
 
-# 파일 추가
+# 파일 추가 >> filedialog.askopenfilenames()
 def add_file():
     files = filedialog.askopenfilenames(title="이미지 파일을 선택하세요", \
         filetypes=(("PNG 파일", "*.png"), ("모든 파일", "*.*")), \
-        initialdir="C:/") # 최초에 C:/ 셩로를 보여줌   
+        initialdir=r"C:\Users\nomad\Desktop\PythonWorkspace") # 최초에 사용자가 지정한 경로를 보여줌
+        
+        # *r >> String이 있는 그대로 쓰여진다. (탈출문자 필요 없음) 
+        # initialdir="C:/" # 최초에 C:/ 경로를 보여줌   
 
-    # 사용자가 선택한 파일 목록
-    # for file in files:  
+    # 사용자가 선택한 파일 목록 >> 리스트 박스에 추가
+    for file in files:  
+        list_file.insert(END, file) # END 가장 맨 뒤에 값을 넣어줌
 
-# # 선택 삭제 
-# def del_file():
-#     pass
+'''
+>> reverse() : 값을 뒤집는다
+lst = [1, 2, 3, 4, 5]
+print(lst) # [1, 2, 3, 4, 5]
+lst.reverse()
+print(lst) # [5, 4, 3, 2, 1]
+
+>> reversed() : 값을 뒤집어서 던져주는데 실제 값에는 영향x
+lst2 = [1, 2, 3, 4, 5]
+print("리스트 2 뒤집기 전 :", lst2) # [1, 2, 3, 4, 5]
+
+lst3= reversed(lst2)
+print("리스트 2 뒤집은 후 :", lst2) # [1, 2, 3, 4, 5]
+print("리스트3 : ", list(lst3)) # [5, 4, 3, 2, 1]
+'''
+
+# 선택 삭제 
+def del_file():
+    # print(list_file.curselection()) # 선택된 항목 확인 (위치로 반환 ex. (0, 1, 2, 3))
+    # ★ 앞에서 부터 삭제하면 두번째 부터 인덱스가 달라지게 된다. >> 뒤에서부터 삭제 !!
+   
+    for index in reversed(list_file.curselection()):
+        list_file.delete(index)
+
+# 저장 경로 (폴더) >> filedialog.askdirectory()
+def browse_dest_path():
+    folder_selected = filedialog.askdirectory()
+    if folder_selected == '': # 사용자가 취소를 누를 때
+        return
+    # print(folder_selected)
+    txt_dest_path.delete(0, END) # 내용 삭제 >> Entry : 0, END cf. Text "1.0", END
+    txt_dest_path.insert(0, folder_selected) # insert(index, chars)
+
+# 시작
+def start():
+    # 각 옵션들 값 확인
+    print("가로넓이 : ", cmb_width.get())
+    print("간격 : ", cmb_space.get())
+    print("포맷 : ", cmb_format.get())
+
+    # 파일 목록 확인 >> .size() == 0
+    if list_file.size() == 0: 
+        msgbox.showwarning("경고", "이미지 파일을 추가하세요")
+        return
+
+    # 저장 경로 확인 >> len() == 0
+    if len(txt_dest_path.get()) == 0:
+        msgbox.showwarning("경고", "저장 경로를 선택하세요")
 
 # 파일 프레임 (파일 추가, 선택 삭제)
 file_frame = Frame(root)
@@ -54,7 +104,7 @@ path_frame.pack(fill="x", padx=5, pady=5, ipady=5)
 txt_dest_path = Entry(path_frame)
 txt_dest_path.pack(side="left", fill="x", expand=True, padx=5, pady=5, ipady=4)
 
-btn_dest_path = Button(path_frame, text="찾아보기", width=10)
+btn_dest_path = Button(path_frame, text="찾아보기", width=10, command=browse_dest_path)
 btn_dest_path.pack(side="right", padx=5, pady=5)
 
 # 옵션 프레임
@@ -109,7 +159,7 @@ frame_run.pack(fill="x", padx=5, pady=5)
 btn_close = Button(frame_run, padx=5, pady=5, text="닫기", width=12, command=root.quit)
 btn_close.pack(side="right", padx=5, pady=5)
 
-btn_start = Button(frame_run, text="시작", padx=5, pady=5, width=12)
+btn_start = Button(frame_run, text="시작", padx=5, pady=5, width=12, command=start)
 btn_start.pack(side="right", padx=5, pady=5)
 
 root.resizable(False, False) # 윈도우 크기 고정
