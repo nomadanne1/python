@@ -19,3 +19,17 @@
 8. 진행상황 : 현재 진행중인 파일 순서에 맞게 반영
 9. 닫기 : 프로그램 종료
 '''
+
+# zip 라이브러리 >> 스트 두개를 합쳐준다 (세로로)
+kor = ["사과", "바나나", "오렌지"]
+eng = ["apple", "banana", "orange"]
+
+print(list(zip(kor, eng))) # [('사과', 'apple'), ('바나나', 'banana'), ('오렌지', 'orange')]
+
+# Unzip >> *
+mixed = [('사과', 'apple'), ('바나나', 'banana'), ('오렌지', 'orange')]
+print(list(zip(*mixed))) # [('사과', '바나나', '오렌지'), ('apple', 'banana', 'orange')]
+
+kor2, eng2 = zip(*mixed)
+print(kor2) # ('사과', '바나나', '오렌지')
+print(eng2) # ('apple', 'banana', 'orange')

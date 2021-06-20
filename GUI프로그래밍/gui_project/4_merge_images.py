@@ -39,9 +39,13 @@ def browse_dest_path():
 def merge_image():
     # print(list_file.get(0, END)) # 모든 파일 목록을 가지고 오기
     images = [Image.open(x) for x in list_file.get(0, END)]
-    #  ★ size -> size[0] : width, size[1] : height
-    widths = [x.size[0] for x in images] # ex. width :  [1920, 640, 40, 640, 1920]
-    heights = [x.size[1] for x in images] # ex. height :  [1080, 20, 40, 200, 1080]
+    # #  ★ size -> size[0] : width, size[1] : height 
+    # >> 방법 1
+    # widths = [x.size[0] for x in images] # ex. width :  [1920, 640, 40, 640, 1920]
+    # heights = [x.size[1] for x in images] # ex. height :  [1080, 20, 40, 200, 1080]
+
+    # >> 방법2 : Unzip 사용 - 예) [(10, 10), (20, 20), (30, 30)]를 분리
+    widths, heights = zip(*(x.size for x in images))
 
     print("width : ", widths)
     print("height : ", heights)
@@ -59,16 +63,22 @@ def merge_image():
     # 스케치북 준비 >> Image.new("RGB",(width, height))
     result_img = Image.new("RGB", (max_width, total_height), (255, 255, 255)) # 배경 흰색
     y_offset = 0 # ★ y 위치
-    for img in images:
+    # for img in images:
+    #     result_img.paste(img, (0, y_offset))
+    #     y_offset += img.size[1] # .size[1] >> height 값 만큼 더해줌
+
+    # 프로그래스 바 연동
+    for idx, img in enumerate(images):
         result_img.paste(img, (0, y_offset))
-        y_offset += img.size[1] # .size[1] >> height 값 만큼 더해줌
+        y_offset += img.size[1]
+
+        progress =(idx + 1) / len(images) * 100 # 실제 percent 정보를 계산
+        p_var.set(progress) # progress bar 의 값 설정
+        progress_bar.update() # ui 업데이트
 
     dest_path = os.path.join(txt_dest_path.get(), "nado_photo.jpg") # >> import os
     result_img.save(dest_path)
     msgbox.showinfo("알림", "작업이 완료되었습니다.")
-
-
-    
     
 # 시작  >> 이미지 통합
 def start():
