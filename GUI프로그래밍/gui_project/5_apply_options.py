@@ -67,12 +67,28 @@ def merge_image():
     # 이미지 사이즈 리스트에 넣어서 하나씩 처리
     image_sizes = [] # [(width1, height1), (width2, height2), ...]
     if img_width > -1:
-        pass # width 값 변경
+        # width 값 변경
+        imges_sizes = [(int(img_width), int(img_width * x.size[1] / x.size[0])) for x in images]
     else: 
         # 원본 사이즈 사용
         img_sizes = [(x.sixe[0], x.size[1]) for x in images]
 
-    widths, heights = zip(*(x.size for x in images))
+    # 계산식
+    # 100 * 60 이미지가 있음. >> width 를 80으로 줄이면 height 는?
+    # (원본 width) : (원본 height) = (변경 width) : (변경 height)
+    # 100 : 60 = 80 : ?
+    # x : y = x' : y'
+    # xy' = x'y
+    # y' = x'y / x -> 이 식을 적용
+    # 100:60=80:48
+
+    # 우리 코드에 대입하려면?
+    # x = width = size[0]
+    # y = height = size[1]
+    # x' = img_width # 이 값으로 변경 해야 함 
+    # y' = x'y / x = img_width * size[1] / size [0]
+
+    widths, heights = zip(*(image_sizes))
 
     print("width : ", widths)
     print("height : ", heights)
