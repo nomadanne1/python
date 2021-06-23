@@ -68,10 +68,10 @@ def merge_image():
     image_sizes = [] # [(width1, height1), (width2, height2), ...]
     if img_width > -1:
         # width 값 변경
-        imges_sizes = [(int(img_width), int(img_width * x.size[1] / x.size[0])) for x in images]
+        image_sizes = [(int(img_width), int(img_width * x.size[1] / x.size[0])) for x in images]
     else: 
         # 원본 사이즈 사용
-        img_sizes = [(x.sixe[0], x.size[1]) for x in images]
+        image_sizes = [(x.sixe[0], x.size[1]) for x in images]
 
     # 계산식
     # 100 * 60 이미지가 있음. >> width 를 80으로 줄이면 height 는?
@@ -99,18 +99,28 @@ def merge_image():
     print("total height : ", total_height)
 
     # 스케치북 준비 >> Image.new("RGB",(width, height))
+    if img_space > 0:
+        total_height += (img_space * (len(images) -1))
+
+    
     result_img = Image.new("RGB", (max_width, total_height), (255, 255, 255)) # 배경 흰색
     y_offset = 0 # ★ y 위치
 
     # 프로그래스 바 연동
     for idx, img in enumerate(images):
+        # width 가 '원본유지'가 아닐 때에는 이미지 크기 조정
+        if img_width > -1:
+            img = img.resize(image_sizes[idx])
+
         result_img.paste(img, (0, y_offset))
-        y_offset += img.size[1]
+        y_offset += (img.size[1] + img_space) # height 값 + 사용자가 지정한 간격
 
         progress =(idx + 1) / len(images) * 100 # 실제 percent 정보를 계산
         p_var.set(progress) # progress bar 의 값 설정
         progress_bar.update() # ui 업데이트
 
+    # 포맷 옵션 처리
+    file_name = "nado_photo." + img_format
     dest_path = os.path.join(txt_dest_path.get(), "nado_photo.jpg") # >> import os
     result_img.save(dest_path)
     msgbox.showinfo("알림", "작업이 완료되었습니다.")
