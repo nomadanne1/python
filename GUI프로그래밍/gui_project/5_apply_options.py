@@ -39,91 +39,94 @@ def merge_image():
     # print("간격 : ", cmb_space.get())
     # print("포맷 : ", cmb_format.get())
 
-    # 가로넓이
-    img_width = cmb_width.get()
-    if img_width == "원본유지":
-        img_width = -1 # -1 일때는 원본 기준으로 
-    else: # >> 1024, 800, 640
-        img_width = int(img_width)
+    try:
+        # 가로넓이
+        img_width = cmb_width.get()
+        if img_width == "원본유지":
+            img_width = -1 # -1 일때는 원본 기준으로 
+        else: # >> 1024, 800, 640
+            img_width = int(img_width)
 
-    # 간격
-    img_space = cmb_space.get()
-    if img_space == "좁게":
-        img_space = 30
-    elif img_space == "보통":
-        img_space == 60
-    elif img_space == "넓게":
-        img_space = 90
-    else: # 없음
-        img_space = 0
+        # 간격
+        img_space = cmb_space.get()
+        if img_space == "좁게":
+            img_space = 30
+        elif img_space == "보통":
+            img_space == 60
+        elif img_space == "넓게":
+            img_space = 90
+        else: # 없음
+            img_space = 0
 
-    # 포맷
-    img_format = cmb_format.get().lower() # .lower() >> PNG, JPG, BMP 값을 받아와서 소문자로 변경
+        # 포맷
+        img_format = cmb_format.get().lower() # .lower() >> PNG, JPG, BMP 값을 받아와서 소문자로 변경
 
-    #####################################
+        #####################################
 
-    images = [Image.open(x) for x in list_file.get(0, END)]
+        images = [Image.open(x) for x in list_file.get(0, END)]
 
-    # 이미지 사이즈 리스트에 넣어서 하나씩 처리
-    image_sizes = [] # [(width1, height1), (width2, height2), ...]
-    if img_width > -1:
-        # width 값 변경
-        image_sizes = [(int(img_width), int(img_width * x.size[1] / x.size[0])) for x in images]
-    else: 
-        # 원본 사이즈 사용
-        image_sizes = [(x.sixe[0], x.size[1]) for x in images]
-
-    # 계산식
-    # 100 * 60 이미지가 있음. >> width 를 80으로 줄이면 height 는?
-    # (원본 width) : (원본 height) = (변경 width) : (변경 height)
-    # 100 : 60 = 80 : ?
-    # x : y = x' : y'
-    # xy' = x'y
-    # y' = x'y / x -> 이 식을 적용
-    # 100:60=80:48
-
-    # 우리 코드에 대입하려면?
-    # x = width = size[0]
-    # y = height = size[1]
-    # x' = img_width # 이 값으로 변경 해야 함 
-    # y' = x'y / x = img_width * size[1] / size [0]
-
-    widths, heights = zip(*(image_sizes))
-
-    print("width : ", widths)
-    print("height : ", heights)
-
-    # 최대 넓이, 전체 높이 구해옴 >> max(), sum()
-    max_width, total_height = max(widths), sum(heights)
-    print("max width : ", max_width)
-    print("total height : ", total_height)
-
-    # 스케치북 준비 >> Image.new("RGB",(width, height))
-    if img_space > 0:
-        total_height += (img_space * (len(images) -1))
-
-    
-    result_img = Image.new("RGB", (max_width, total_height), (255, 255, 255)) # 배경 흰색
-    y_offset = 0 # ★ y 위치
-
-    # 프로그래스 바 연동
-    for idx, img in enumerate(images):
-        # width 가 '원본유지'가 아닐 때에는 이미지 크기 조정
+        # 이미지 사이즈 리스트에 넣어서 하나씩 처리
+        image_sizes = [] # [(width1, height1), (width2, height2), ...]
         if img_width > -1:
-            img = img.resize(image_sizes[idx])
+            # width 값 변경
+            image_sizes = [(int(img_width), int(img_width * x.size[1] / x.size[0])) for x in images]
+        else: 
+            # 원본 사이즈 사용
+            image_sizes = [(x.sixe[0], x.size[1]) for x in images]
 
-        result_img.paste(img, (0, y_offset))
-        y_offset += (img.size[1] + img_space) # height 값 + 사용자가 지정한 간격
+        # 계산식
+        # 100 * 60 이미지가 있음. >> width 를 80으로 줄이면 height 는?
+        # (원본 width) : (원본 height) = (변경 width) : (변경 height)
+        # 100 : 60 = 80 : ?
+        # x : y = x' : y'
+        # xy' = x'y
+        # y' = x'y / x -> 이 식을 적용
+        # 100:60=80:48
 
-        progress =(idx + 1) / len(images) * 100 # 실제 percent 정보를 계산
-        p_var.set(progress) # progress bar 의 값 설정
-        progress_bar.update() # ui 업데이트
+        # 우리 코드에 대입하려면?
+        # x = width = size[0]
+        # y = height = size[1]
+        # x' = img_width # 이 값으로 변경 해야 함 
+        # y' = x'y / x = img_width * size[1] / size [0]
 
-    # 포맷 옵션 처리
-    file_name = "nado_photo." + img_format
-    dest_path = os.path.join(txt_dest_path.get(), "nado_photo.jpg") # >> import os
-    result_img.save(dest_path)
-    msgbox.showinfo("알림", "작업이 완료되었습니다.")
+        widths, heights = zip(*(image_sizes))
+
+        print("width : ", widths)
+        print("height : ", heights)
+
+        # 최대 넓이, 전체 높이 구해옴 >> max(), sum()
+        max_width, total_height = max(widths), sum(heights)
+        print("max width : ", max_width)
+        print("total height : ", total_height)
+
+        # 스케치북 준비 >> Image.new("RGB",(width, height))
+        if img_space > 0:
+            total_height += (img_space * (len(images) -1))
+
+        
+        result_img = Image.new("RGB", (max_width, total_height), (255, 255, 255)) # 배경 흰색
+        y_offset = 0 # ★ y 위치
+
+        # 프로그래스 바 연동
+        for idx, img in enumerate(images):
+            # width 가 '원본유지'가 아닐 때에는 이미지 크기 조정
+            if img_width > -1:
+                img = img.resize(image_sizes[idx])
+
+            result_img.paste(img, (0, y_offset))
+            y_offset += (img.size[1] + img_space) # height 값 + 사용자가 지정한 간격
+
+            progress =(idx + 1) / len(images) * 100 # 실제 percent 정보를 계산
+            p_var.set(progress) # progress bar 의 값 설정
+            progress_bar.update() # ui 업데이트
+
+        # 포맷 옵션 처리
+        file_name = "nado_photo." + img_format
+        dest_path = os.path.join(txt_dest_path.get(), "nado_photo.jpg") # >> import os
+        result_img.save(dest_path)
+        msgbox.showinfo("알림", "작업이 완료되었습니다.")
+    except Exception as err: # 예외처리
+        msgbox.showerror("에러", err)
     
 # 시작  >> 이미지 통합
 def start():
